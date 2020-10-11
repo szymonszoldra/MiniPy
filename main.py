@@ -2,6 +2,8 @@ import sys
 import re
 import os
 
+from time import time
+
 
 def remove_comments(lines_list):
     # remove one line // comments
@@ -56,12 +58,17 @@ def minify(path):
 
 
 def main():
+    start = time()
+
     dir_path = './minified'
     if not os.path.exists(dir_path):
         os.mkdir(dir_path)
 
     for i in range(1, len(sys.argv)):
         minify(sys.argv[i])
+
+    stop = time()
+    print(f'Took {round(stop - start, 4)}ms')
 
 
 if __name__ == '__main__' and len(sys.argv) > 1:
