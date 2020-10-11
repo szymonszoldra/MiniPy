@@ -3,6 +3,15 @@ import re
 import os
 
 
+def remove_comments(lines_list):
+    # remove one line // comments
+    for i, line in enumerate(lines_list):
+        lines_list[i] = re.sub(r'(\/+\/+).*', '', line)
+
+    string = "".join(lines_list)
+    return string
+
+
 def cut_whitespace_chars(list_of_chars, string):
     final_string = string
 
@@ -21,7 +30,9 @@ def cut_whitespace_chars(list_of_chars, string):
 def minify(path):
     try:
         with open(path, mode='r') as file:
-            list_of_chars = list(file.read())
+            lines_list = file.readlines()
+            string_without_comments = remove_comments(lines_list)
+            list_of_chars = list(string_without_comments)
             counter = list_of_chars.count('\n')
 
             for i in range(0, counter):
